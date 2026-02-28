@@ -60,13 +60,47 @@ export const config = {
 };
 ```
 
+### 書籍ファイルの配置
+
+1. **`data/`ディレクトリに書籍の内容を配置**
+
+書籍の内容をテキストファイルとして保存してください：
+
+```
+data/
+└── book.txt  # 書籍の全内容（単一ファイル）
+```
+
+または章ごとに分割：
+
+```
+data/
+├── chapter-01.txt
+├── chapter-02.txt
+└── ...
+```
+
+詳細は [data/README.md](data/README.md) を参照してください。
+
+⚠️ **注意**: `data/`ディレクトリは `.gitignore` に含まれており、GitHubにはプッシュされません（著作権保護）。
+
 ### AI APIの連携
 
 現在、API Routesはモックレスポンスを返しています。実際のAI APIと連携するには、[app/api/chat/route.ts](app/api/chat/route.ts) を編集してください。
 
-```typescript
-// モックレスポンスの部分を実際のAI API呼び出しに置き換える
-// 例: OpenAI API, Anthropic Claude API, Google Gemini API など
+実装例はファイル内にコメントで記載されています：
+- OpenAI API
+- Anthropic Claude API
+- その他のAI API
+
+環境変数の設定例（`.env.local`を作成）：
+
+```bash
+# OpenAIを使用する場合
+OPENAI_API_KEY=your-api-key-here
+
+# Anthropic Claudeを使用する場合
+ANTHROPIC_API_KEY=your-api-key-here
 ```
 
 ## プロジェクト構造
@@ -87,7 +121,11 @@ export const config = {
 │   │   ├── chat-input.tsx      # 入力エリアコンポーネント
 │   │   └── footer.tsx          # フッターコンポーネント
 │   └── ui/                     # shadcn/uiコンポーネント
+├── data/                       # 書籍の内容（.gitignoreに含まれる）
+│   ├── README.md               # 書籍ファイル配置ガイド
+│   └── book.txt                # 書籍の内容（ユーザーが配置）
 ├── lib/
+│   ├── book-content.ts         # 書籍コンテンツ読み込みユーティリティ
 │   ├── config.ts               # 設定ファイル
 │   ├── types.ts                # 型定義
 │   └── utils.ts                # ユーティリティ関数
