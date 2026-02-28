@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AIアドバイスサービス
 
-## Getting Started
+著者のビジネス書の内容をベースにしたAIアドバイスサービスです。ユーザーはユーザー登録不要で、悩みや質問をチャット形式で入力し、書籍の内容に基づいた信頼性の高いアドバイスを得ることができます。
 
-First, run the development server:
+## 主な機能
+
+- ✅ ユーザー登録不要のチャット形式
+- ✅ 過去の会話の文脈を引き継いだ連続したチャット
+- ✅ localStorageによる履歴の永続化（ページリロード後も会話が継続）
+- ✅ 新しい相談を始める機能（履歴リセット）
+- ✅ 自動スクロール機能
+- ✅ レスポンシブデザイン（PC・スマホ対応）
+
+## 技術スタック
+
+- **Next.js 16** (App Router)
+- **TypeScript**
+- **Tailwind CSS**
+- **shadcn/ui** (UIコンポーネント)
+- **Lucide React** (アイコン)
+
+## セットアップ
+
+### 1. 依存関係のインストール
+
+```bash
+npm install
+```
+
+### 2. 開発サーバーの起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## カスタマイズ
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### サービス名や設定の変更
 
-## Learn More
+[lib/config.ts](lib/config.ts) ファイルで以下の設定を変更できます：
 
-To learn more about Next.js, take a look at the following resources:
+```typescript
+export const config = {
+  // サービス名（ヘッダーに表示）
+  serviceName: "書籍名 AIアドバイザー", // ← ここを変更
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  // 書籍購入ページのURL
+  bookPurchaseUrl: "https://example.com/book", // ← ここを変更
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  // AIの初期挨拶メッセージ
+  initialMessage: "こんにちは！私は書籍の内容を...", // ← ここを変更
 
-## Deploy on Vercel
+  // 免責事項
+  disclaimer: "※本サービスはAIによる回答であり...", // ← ここを変更
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  // localStorageのキー名
+  storageKey: "ai-book-advisor-chat-history",
+};
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### AI APIの連携
+
+現在、API Routesはモックレスポンスを返しています。実際のAI APIと連携するには、[app/api/chat/route.ts](app/api/chat/route.ts) を編集してください。
+
+```typescript
+// モックレスポンスの部分を実際のAI API呼び出しに置き換える
+// 例: OpenAI API, Anthropic Claude API, Google Gemini API など
+```
+
+## プロジェクト構造
+
+```
+.
+├── app/
+│   ├── api/
+│   │   └── chat/
+│   │       └── route.ts        # チャットAPI（現在はモック）
+│   ├── globals.css             # グローバルスタイル
+│   ├── layout.tsx              # レイアウト
+│   └── page.tsx                # メインページ（チャット画面）
+├── components/
+│   ├── chat/
+│   │   ├── header.tsx          # ヘッダーコンポーネント
+│   │   ├── message.tsx         # メッセージコンポーネント
+│   │   ├── chat-input.tsx      # 入力エリアコンポーネント
+│   │   └── footer.tsx          # フッターコンポーネント
+│   └── ui/                     # shadcn/uiコンポーネント
+├── lib/
+│   ├── config.ts               # 設定ファイル
+│   ├── types.ts                # 型定義
+│   └── utils.ts                # ユーティリティ関数
+└── README.md
+```
+
+## デプロイ
+
+### Vercelへのデプロイ
+
+1. [Vercel](https://vercel.com)にサインアップ
+2. GitHubリポジトリをインポート
+3. 自動的にデプロイが開始されます
+
+詳細は[Next.jsデプロイメントドキュメント](https://nextjs.org/docs/app/building-your-application/deploying)を参照してください。
+
+## ライセンス
+
+MIT
